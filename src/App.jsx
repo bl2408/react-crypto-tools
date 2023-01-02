@@ -1,14 +1,12 @@
-import { Link, Route, Switch } from "react-router-dom"
-import Leverage from "./Leverage"
+import { Route, Switch } from "react-router-dom"
+import Leverage from "./Leverage/Leverage"
+import Nav from "./Nav/Nav"
 
 function App() {
 
   return (
     <>
-      <nav>
-        <Link to={"/"}>Home</Link>
-        <Link to={"/lev"}>Leverage</Link>
-      </nav>
+      <Nav />
 
       <Switch>
 

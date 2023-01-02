@@ -1,0 +1,88 @@
+main {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+}
+
+main > * {
+    border: solid 1px green;
+}
+
+#capital-leverage{
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+}
+
+#capital-leverage input[type="text"]{
+    width: 100%;
+}
+
+.row3{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+#form-buttons{
+    display: flex;
+    gap: 10px;
+}
+
+label > * {
+    display: block;
+    width: 100%;
+}
+
+
+form{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    box-sizing: border-box; 
+}
+
+.display-grid{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2px;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.dg-row{
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 2px;
+}
+
+.dg-row:first-child > *{
+    background-color: rgb(188, 188, 188);
+    font-weight: bold;
+    text-transform: uppercase
+}
+
+.dg-row > * {
+    background-color: rgb(209, 209, 209);
+    padding: 10px;
+    box-sizing: border-box;
+    text-align: center;
+}
+.dg-row.start  > *{
+    background-color: hsl(0, 0%, 65%);
+}
+
+.dg-row.green.target > *{
+    background-color: hsl(120, 100%, 76%);
+}
+.dg-row.red.target  > *{
+    background-color: hsl(0, 100%, 77%);
+}
+
+.dg-row.green.range > *{
+    color: hsl(120, 40%, 30%);
+}
+.dg-row.red.range  > *{
+    color: hsl(0, 40%, 30%);
+}
+
+
