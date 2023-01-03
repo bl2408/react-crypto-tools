@@ -1,42 +1,88 @@
-import { styleRows } from "../utils/fns.js"
 
 export default function Display({data}){
 
-    const totalList = [
-        ...styleRows(data.profit, data.calcTarget, "green"), 
-        {uPrice: data.entryPrice, priceChange: 0, percentage: 0, balance: data.capital, pnl: 0, style: "start"},
-        ...styleRows(data.loss, data.calcStoploss, "red")
-    ].sort((a,b)=> b.uPrice - a.uPrice);
-
-    console.log(totalList)
 
     return (
-        <div >
+        <div id="display-grids">
+
+            <div className="col1">
+                {/* balance/units/pnl */}
+                <div>
+                    <div className="row4">
+                        <div className="header alignRight">Balance:</div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                    <div className="row4">
+                        <div className="header alignRight">Units:</div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                    <div className="row4">
+                        <div className="header alignRight">PNL:</div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                    <div className="row4">
+                        <div className="header alignRight">Liquidation:</div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                </div>
+                
+                {/* target/current/sl */}
+                <div>
+                    <div className="row4">
+                        <div></div>
+                        <div className="header">Unit $</div>
+                        <div className="header">Change $</div>
+                        <div className="header">Change %</div>
+                    </div>
+                    <div className="row4">
+                        <div className="header alignRight">Target:</div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                    <div className="row4">
+                        <div className="header alignRight">Current:</div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                    <div className="row4">
+                        <div className="header alignRight">SL:</div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                </div>
+            </div>
             
-            <div className="display-grid">
-               
-                <div className="dg-row">
-                    <div>Unit Price</div>
-                    <div>Price Change $</div>
-                    <div>Price Change %</div>
-                    <div>PNL</div>
-                    <div>Balance</div>
+            <div className="col2">
+                {/* Profit range */}
+                <div>
+                    <div className="row4 header alignCenter">
+                        <div>Unit $</div>
+                        <div>Change $</div>
+                        <div>Change %</div>
+                        <div>Balance +$</div>
+                    </div>                                      
                 </div>
 
-                {totalList.map(item=>{
-                    return (
-                        <div key={item.uPrice} className={`dg-row ${item.style}`}>
-                            <div>{item.uPrice}</div>
-                            <div>{item.priceChange}</div>
-                            <div>{item.percentage}</div>
-                            <div>{item.pnl}</div>
-                            <div>{item.balance}</div>
-                        </div>
-                    )
-                })}
-
-                
-
+                {/* Loss range */}
+                <div>
+                    <div className="row4 header alignCenter">
+                        <div>Unit $</div>
+                        <div>Change $</div>
+                        <div>Change %</div>
+                        <div>Balance -$</div>
+                    </div>                                      
+                </div>
             </div>
 
         </div>

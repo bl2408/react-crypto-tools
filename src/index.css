@@ -9,3 +9,14 @@ input, select{
   padding: 5px;
   box-sizing: border-box;
 }
+
+#root{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  --shade1: rgb(133, 133, 133);
+
+  --mainRed: red;
+  --mainGreen: green;
+}
