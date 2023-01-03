@@ -41,24 +41,24 @@ export default function Form({setValuesObj}){
             <div className="row2">
                 <label>
                     Capital:
-                    <input type="text" name="capital"/>
+                    <input type="text" name="capital" pattern="\d*" />
                 </label>
 
                 <label>
                     Leverage:
-                    <input type="text" name="leverage"/>
+                    <input type="text" name="leverage" pattern="\d*" />
                 </label>
             </div>
 
             <label>
                 Entry price:
-                <input type="text" name="entryPrice"/>
+                <input type="text" name="entryPrice" pattern="\d*" />
             </label>
 
             <div className="row2">
                 <label>
                     Target:
-                    <input type="text" name="takeProfit"/>
+                    <input type="text" name="takeProfit" pattern="\d*" />
                 </label>
                 <label>
                     Option:
@@ -73,7 +73,7 @@ export default function Form({setValuesObj}){
             <div className="row2">
                 <label>
                     Stoploss:
-                    <input type="text" name="stopLoss"/>
+                    <input type="text" name="stopLoss" pattern="\d*" />
                 </label>
                 <label>
                     Option:
