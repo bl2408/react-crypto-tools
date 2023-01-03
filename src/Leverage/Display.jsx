@@ -49,7 +49,7 @@ export default function Display({data}){
     );
 
     const tableLoss = data?.calcLossTable?.map((item, i)=>{
-        const liqStyle = i === data.calcLossTable.length -1 ? "red" : "";
+        const liqStyle = parseInt(item.risk) === 100 ? "red" : "";
         return (
             <div key={`losstable-${i}`} className={`row5 alignCenter ${liqStyle}`}>
                 <div>{formatInsertValues({value: item.unitPrice, symbol: "$"})}</div>

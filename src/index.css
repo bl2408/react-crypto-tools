@@ -71,6 +71,17 @@ button:hover, input[type="submit"]:hover, input[type="reset"]:hover{
   background-color: var(--bgButtonHighlight);
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
 #root{
   display: flex;
   flex-direction: column;

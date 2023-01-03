@@ -19,7 +19,7 @@ export default function Form({setValuesObj}){
         for(const item of refForm.current.elements){
             
             switch(item.type){
-                case "text":
+                case "number":
                     if(!item.value){ 
                         item.focus();
                         return ;
@@ -41,24 +41,24 @@ export default function Form({setValuesObj}){
             <div className="row2">
                 <label>
                     Capital:
-                    <input type="text" name="capital" pattern="\d*" />
+                    <input name="capital" type="number" pattern="[0-9]*" inputmode="numeric" />
                 </label>
 
                 <label>
                     Leverage:
-                    <input type="text" name="leverage" pattern="\d*" />
+                    <input name="leverage" type="number" pattern="[0-9]*" inputmode="numeric"/>
                 </label>
             </div>
 
             <label>
                 Entry price:
-                <input type="text" name="entryPrice" pattern="\d*" />
+                <input name="entryPrice" type="number" pattern="[0-9]*" inputmode="numeric"/>
             </label>
 
             <div className="row2">
                 <label>
                     Target:
-                    <input type="text" name="takeProfit" pattern="\d*" />
+                    <input name="takeProfit" type="number" pattern="[0-9]*" inputmode="numeric" />
                 </label>
                 <label>
                     Option:
@@ -73,7 +73,7 @@ export default function Form({setValuesObj}){
             <div className="row2">
                 <label>
                     Stoploss:
-                    <input type="text" name="stopLoss" pattern="\d*" />
+                    <input name="stopLoss" type="number" pattern="[0-9]*" inputmode="numeric"/>
                 </label>
                 <label>
                     Option:

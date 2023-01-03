@@ -114,6 +114,10 @@ const calcLossTable =(capital, entry, units, mode)=>{
         }else{
             unitPrice = ((units * entry) + capitalChange) / units;
         }
+
+        if(unitPrice < 0){
+            break;
+        }
         arr.push({
             unitPrice,
             priceChange: Math.abs(unitPrice - entry),
