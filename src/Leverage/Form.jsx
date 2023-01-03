@@ -23,7 +23,7 @@ export default function Form({setValuesObj}){
     return (
 
         <form onSubmit={handleSubmit}>
-            <div id="capital-leverage">
+            <div className="row2">
                 <label>
                     Capital:
                     <input type="text" name="capital"/>
@@ -40,7 +40,7 @@ export default function Form({setValuesObj}){
                 <input type="text" name="entryPrice"/>
             </label>
 
-            <div className="row3">
+            <div className="row2">
                 <label>
                     Target:
                     <input type="text" name="target"/>
@@ -52,20 +52,10 @@ export default function Form({setValuesObj}){
                         <option value="addMinusValue">Price +/- $</option>
                         <option value="pricePerUnit">$ per unit</option>
                     </select>
-                </label> 
-                <label>
-                    Range
-                    <select name="rangeTargetOptions">
-                        <option value="1">1</option>
-                        <option value="2">3</option>
-                        <option value="3">5</option>
-                        <option value="4">7</option>
-                        <option value="5">9</option>
-                    </select>
-                </label> 
+                </label>  
             </div>
 
-            <div className="row3">
+            <div className="row2">
                 <label>
                     Stoploss:
                     <input type="text" name="stoploss"/>
@@ -78,16 +68,6 @@ export default function Form({setValuesObj}){
                         <option value="pricePerUnit">$ per unit</option>
                     </select>
                 </label>  
-                <label>
-                    Range
-                    <select name="rangeStoplossOptions">
-                        <option value="1">1</option>
-                        <option value="2">3</option>
-                        <option value="3">5</option>
-                        <option value="4">7</option>
-                        <option value="5">9</option>
-                    </select>
-                </label> 
             </div>
 
              
