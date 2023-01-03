@@ -1,19 +1,36 @@
-import { useState, useMemo } from "react";
-import { performObjCalcs } from "../utils/fns";
-import Display from "./Display";
+import { useState, useMemo, lazy, Suspense, useEffect } from "react";
+// import { performObjCalcs } from "../utils/fns";
+// import Display from "./Display";
 import Form from "./Form";
-import "./index.css"
+import "./index.css";
+
+
+const Display = lazy(() => import('./Display'));
+
 
 export default function Leverage(){
 
     const [ valuesObj, setValuesObj ] = useState({});
-    const calcObj = useMemo(() => performObjCalcs(valuesObj), [valuesObj]);
+    const [ calcObj, setCalcObj ] = useState({});
 
+    useEffect(()=>{
+        if(valuesObj.mode){
+            import("../utils/fns").then(fn =>fn.performObjCalcs(valuesObj)).then(res=>setCalcObj(state=>res));
+        }
+        return ()=>{};
+    }, [valuesObj]);
 
     return (
         <main>
             <Form setValuesObj={setValuesObj} />
-            <Display data={calcObj} />
+            {calcObj.mode 
+            ? 
+                <Suspense fallback={<div>Loading...</div>}>
+                    <Display data={calcObj} />
+                </Suspense> 
+            : null
+            }
+            
         </main>
     );
 }

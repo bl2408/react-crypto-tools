@@ -96,8 +96,6 @@ const performObjCalcs = (obj)=>{
     obj.calcStopLossROE = calcPercentage(obj.calcStopLossBalance, obj.capital);
 
     obj.calcLossTable = calcLossTable(obj.capital, obj.entryPrice, obj.leverage, obj.mode);
-    
-    console.log(obj);
 
     return obj;
 };
