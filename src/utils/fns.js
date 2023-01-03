@@ -1,44 +1,138 @@
 
 const calcPercentageOf =(percentageValue, ofValue)=> (percentageValue / 100) * ofValue;
 
-const calcPercentage =(num1, num2)=>Math.round(((num1 / num2) - 1) * 10000 ) / 10000
+const calcPercentage =(num1, num2)=> Math.abs(Math.round(((num1 / num2) - 1) * 10000 ) / 10000) * 100
 
-const calcPNL =(target, units, entry)=>(target * units) - (entry * units);
+const calcPNL = (target, units, entry)=>(target * units) - (entry * units);
 
 
 
 const performObjCalcs = (obj)=>{
+
+    if(!obj.mode){ return {}; }
+
     //calculate total capital
     obj.leveragedCapital = obj.capital * obj.leverage
 
     //calculate total units
     obj.totalUnits = obj.leveragedCapital / obj.entryPrice
 
-    switch(obj.targetOptions){
+    //calculate liq
+    // obj.liqPrice = obj.entryPrice / obj.leverage;
+
+    // if(obj.mode === "long"){
+    //     obj.liqPrice =  obj.entryPrice - obj.liqPrice;
+    // }else{
+    //     obj.liqPrice = obj.liqPrice + obj.entryPrice;
+    // }
+    
+    // obj.liqPriceChange = Math.abs(obj.liqPrice - obj.entryPrice);
+    // obj.liqPriceChangePercent = calcPercentage(obj.liqPrice, obj.entryPrice);
+
+
+    obj.calcTakeProfit = obj.entryPrice
+    
+    switch(obj.takeProfitOptions){
         case "percentage":
-            obj.calcTarget = obj.entryPrice + calcPercentageOf(obj.target, obj.entryPrice);
+            obj.calcTakeProfit = obj.mode ==="long" 
+            ? obj.calcTakeProfit + calcPercentageOf(obj.takeProfit, obj.entryPrice)
+            : obj.calcTakeProfit - calcPercentageOf(obj.takeProfit, obj.entryPrice);
             break;
         case "addMinusValue":
-            obj.calcTarget = obj.entryPrice + obj.target;
+            obj.calcTakeProfit = obj.mode ==="long" 
+            ? obj.entryPrice + obj.takeProfit
+            : obj.entryPrice - obj.takeProfit;
             break;
         default :
-            obj.calcTarget = obj.target;
-    }
-    switch(obj.stoplossOptions){
-        case "percentage":
-            obj.calcStoploss = obj.entryPrice - calcPercentageOf(obj.stoploss, obj.entryPrice);
-            break;
-        case "addMinusValue":
-            obj.calcStoploss = obj.entryPrice - obj.stoploss;
-            break;
-        default :
-            obj.calcStoploss = obj.stoploss;
+            obj.calcTakeProfit = obj.takeProfit;
     }
 
+    obj.calcStopLoss = obj.entryPrice
+
+    switch(obj.stopLossOptions){
+        case "percentage":
+            obj.calcStopLoss = obj.mode ==="long" 
+            ? obj.calcStopLoss - calcPercentageOf(obj.stopLoss, obj.entryPrice)
+            : obj.calcStopLoss + calcPercentageOf(obj.stopLoss, obj.entryPrice);
+            break;
+        case "addMinusValue":
+            obj.calcStopLoss = obj.mode ==="long" 
+            ? obj.calcStopLoss - obj.stopLoss
+            : obj.calcStopLoss + obj.stopLoss;
+            break;
+        default :
+            obj.calcStopLoss = obj.stopLoss;
+    }
+
+    if(obj.mode ==="long"){
+        obj.calcStopLoss = obj.calcStopLoss < 0 ? 0 : obj.calcStopLoss;
+    }else if(obj.mode ==="short"){
+        obj.calcTakeProfit = obj.calcTakeProfit < 0 ? 0 : obj.calcTakeProfit;
+    }
+
+    // calculate P/L changes
+    obj.takeProfitChangePercent = calcPercentage(obj.calcTakeProfit, obj.entryPrice);
+    obj.takeProfitChangeValue = obj.calcTakeProfit - obj.entryPrice;
+
+    obj.stopLossChangePercent = calcPercentage(obj.calcStopLoss, obj.entryPrice);
+    obj.stopLossChangeValue = obj.calcStopLoss - obj.entryPrice;
+
+    //calculate PNL
+    obj.profit = calcPNL(
+        obj.mode ==="long" ? obj.calcTakeProfit : obj.entryPrice, 
+        obj.totalUnits, 
+        obj.mode ==="long" ?  obj.entryPrice : obj.calcTakeProfit
+    );
+    obj.loss = calcPNL(
+        obj.mode ==="long" ? obj.calcStopLoss :  obj.entryPrice, 
+        obj.totalUnits, 
+        obj.mode ==="long" ? obj.entryPrice : obj.calcStopLoss, 
+    );
+
+    obj.calcTakeProfitBalance = obj.capital + obj.profit;
+    obj.calcStopLossBalance = obj.capital - Math.abs(obj.loss);
+
+    obj.calcTakeProfitROE = calcPercentage(obj.calcTakeProfitBalance, obj.capital);
+    obj.calcStopLossROE = calcPercentage(obj.calcStopLossBalance, obj.capital);
+
+    obj.calcLossTable = calcLossTable(obj.capital, obj.entryPrice, obj.leverage, obj.mode);
+    
+    console.log(obj);
+
     return obj;
+};
+
+const calcLossTable =(capital, entry, units, mode)=>{
+    const arr = [];
+    let capitalChange = 0
+    let unitPrice = 0
+    for(let i=.1; i <=1; i+=.1){
+        capitalChange = capital * i
+
+        if(mode === "long"){
+            unitPrice = ((units * entry) - capitalChange) / units;
+        }else{
+            unitPrice = ((units * entry) + capitalChange) / units;
+        }
+        arr.push({
+            unitPrice,
+            priceChange: Math.abs(unitPrice - entry),
+            priceChangePercent: calcPercentage(unitPrice, entry),
+            risk: i * 100,
+            capitalChange,
+        });
+    }
+    
+    return arr;
+};
+
+
+const selectHighlight =(e)=> {
+    window.getSelection()
+      .selectAllChildren(e.target);
 };
 
 
 
 
-export { performObjCalcs }
+export { performObjCalcs, selectHighlight}

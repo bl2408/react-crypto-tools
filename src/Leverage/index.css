@@ -1,14 +1,7 @@
 main {
     display: grid;
     width: 100%;
-}
-
-main > * {
-    border: solid 1px green;
-}
-
-#capital-leverage input[type="text"]{
-    width: 100%;
+    height: 100%;
 }
 
 .row2{
@@ -20,9 +13,13 @@ main > * {
     display: flex;
     gap: 10px;
 }
-
+label {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+}
 label > * {
-    display: block;
     width: 100%;
 }
 
@@ -31,39 +28,66 @@ form{
     display: flex;
     flex-direction: column;
     gap: 20px;
-    padding: 20px;
+    padding: 30px 15px 15px 15px;
     box-sizing: border-box; 
+    background-color: var(--bgForm);
 }
 
+#display-grids{
+    padding: 20px 5px 0px 20px;
+    box-sizing: border-box;
+}
 
 #display-grids > .col1, #display-grids > .col2{
     display: flex;
     flex-direction: column;
     gap: 20px;
-    border: solid 1px green;
     box-sizing: border-box;
     padding: 10px;
 }
 
-#display-grids .row4{
+#display-grids .row4, #display-grids .row5{
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 5px;
-    margin: 5px;
+    gap: 2px;
+    margin: 2px;
 }
-#display-grids .row4 > div{
-    border: solid 1px green;
+#display-grids .row4{
+    grid-template-columns: repeat(4, 1fr);
+}
+#display-grids .row5{
+    grid-template-columns: repeat(5, 1fr);
+}
+
+#display-grids .row4 > div, #display-grids .row5 > div{
     box-sizing: border-box;
-    padding: 5px;
+    padding: 10px 5px;
+    background-color: var(--shade2);
 }
 #display-grids .row4.header > div, 
-#display-grids .row4 > .headerbg{
+#display-grids .row4 > .headerbg,
+#display-grids .row5.header > div, 
+#display-grids .row5 > .headerbg{
     background-color: var(--shade1);
 }
 #display-grids .row4.header > div, 
-#display-grids .row4 > .header{
+#display-grids .row4 > .header,
+#display-grids .row5.header > div, 
+#display-grids .row5 > .header{
     font-weight: bold;
     text-transform: uppercase;
+}
+
+#display-grids .row4 > .green,
+#display-grids .row4.green > div,
+#display-grids .row5 > .green,
+#display-grids .row5.green > div {
+    background-color: var(--mainGreen);
+}
+#display-grids .row4 > .red,
+#display-grids .row4.red > div,
+#display-grids .row5 > .red,
+#display-grids .row5.red > div {
+    background-color: var(--mainRed);
 }
 
 .alignRight {
@@ -74,18 +98,17 @@ form{
 }
 
 
-
-
 @media only screen and (min-width: 700px) {
     main {
         grid-template-columns: 300px 1fr;
-        max-width: 1800px;
     }
 }
 
 @media only screen and (min-width: 1200px) {
     #display-grids{
         display: grid;
-        grid-template-columns: repeat(2, 1fr);
+    }
+    #display-grids.open{
+        grid-template-columns: 2fr 1fr;
     }
 }

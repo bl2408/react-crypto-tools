@@ -1,18 +1,33 @@
+import { useEffect, useRef } from "react";
+
 export default function Form({setValuesObj}){
 
+    const refForm = useRef();
 
-    const handleSubmit =e=>{
-        e.preventDefault();
+    useEffect(()=>{
+        document.querySelectorAll("option").forEach(el=>{
+            el.innerHTML = `${el.innerHTML} &nbsp;`
+        });
+    },[]);
 
-        const obj = {};
+    const handleSubmit =(mode)=>{
 
-        for(const item of e.target.elements){
+        const obj = {
+            mode
+        };
+
+        for(const item of refForm.current.elements){
+            
             switch(item.type){
                 case "text":
-                    obj[item.name] = isNaN(parseFloat(item.value)) ? 0 : parseFloat(item.value);
+                    if(!item.value){ 
+                        item.focus();
+                        return ;
+                    }
+                    obj[item.name] = isNaN(parseFloat(item.value)) ? 0 : Math.abs(parseFloat(item.value));
                     break;
                 case "select-one":
-                    obj[item.name] = item.value
+                    obj[item.name] = item.value;
                     break;
             }
         }
@@ -22,7 +37,7 @@ export default function Form({setValuesObj}){
 
     return (
 
-        <form onSubmit={handleSubmit}>
+        <form ref={refForm} onSubmit={e=>e.preventDefault()} autoComplete="off">
             <div className="row2">
                 <label>
                     Capital:
@@ -43,11 +58,11 @@ export default function Form({setValuesObj}){
             <div className="row2">
                 <label>
                     Target:
-                    <input type="text" name="target"/>
+                    <input type="text" name="takeProfit"/>
                 </label>
                 <label>
-                    Option
-                    <select name="targetOptions">
+                    Option:
+                    <select name="takeProfitOptions">
                         <option value="percentage">%</option>
                         <option value="addMinusValue">Price +/- $</option>
                         <option value="pricePerUnit">$ per unit</option>
@@ -58,11 +73,11 @@ export default function Form({setValuesObj}){
             <div className="row2">
                 <label>
                     Stoploss:
-                    <input type="text" name="stoploss"/>
+                    <input type="text" name="stopLoss"/>
                 </label>
                 <label>
-                    Option
-                    <select name="stoplossOptions">
+                    Option:
+                    <select name="stopLossOptions">
                         <option value="percentage">%</option>
                         <option value="addMinusValue">Price +/- $</option>
                         <option value="pricePerUnit">$ per unit</option>
@@ -73,8 +88,8 @@ export default function Form({setValuesObj}){
              
 
             <div id="form-buttons">
-                <input type="submit" value="Long" />
-                <input type="submit" value="Short" />
+                <button onClick={()=>handleSubmit("long")}>Long</button>
+                <button onClick={()=>handleSubmit("short")}>Short</button>
                 <input type="reset" value="Clear" />
             </div>
         </form>
