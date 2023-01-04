@@ -10,10 +10,11 @@ export default function Form({setValuesObj}){
         });
     },[]);
 
-    const handleSubmit =(mode)=>{
+    const handleSubmit =(mode, live=false)=>{
 
         const obj = {
-            mode
+            mode,
+            live
         };
 
         for(const item of refForm.current.elements){
