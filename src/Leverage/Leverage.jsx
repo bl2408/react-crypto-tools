@@ -1,6 +1,4 @@
-import { useState, useMemo, lazy, Suspense, useEffect } from "react";
-// import { performObjCalcs } from "../utils/fns";
-// import Display from "./Display";
+import { useState, lazy, Suspense, useEffect } from "react";
 import Form from "./Form";
 import "./index.css";
 

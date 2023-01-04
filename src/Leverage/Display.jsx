@@ -93,28 +93,28 @@ export default function Display({data}){
                     <div className="row4 alignCenter header">
                         <div></div>
                         <div>Total</div>
-                        <div>ROE %</div>
+                        <div>ROI %</div>
                         <div>Balance $</div>
                     </div>
-                    <div className="row4 alignCenter green">
+                    <div className={`row4 alignCenter ${ data.profit < 0 ? "red" : "green"}`}>
                         <div className="header alignRight">Profit:</div>
                         <div>
                             {formatInsertValues({value: data.profit, symbol: "$"})}
                         </div>
                         <div>
-                            {formatInsertValues({value: data.calcTakeProfitROE, symbol: "%", symbolEnd: true, fixed: 2})}
+                            {formatInsertValues({value: data.calcTakeProfitROI, symbol: "%", symbolEnd: true, fixed: 2})}
                         </div>
                         <div>
                             {formatInsertValues({value: data.calcTakeProfitBalance, symbol: "$"})}
                         </div>
                     </div>
-                    <div className="row4 alignCenter red">
+                    <div className={`row4 alignCenter ${ data.loss > 0 ? "green" : "red"}`}>
                         <div className="header alignRight">Loss:</div>
                         <div>
                             {formatInsertValues({value: data.loss, symbol: "$"})}
                         </div>
                         <div>
-                            {formatInsertValues({value: data.calcStopLossROE, symbol: "%", symbolEnd: true, fixed: 2})}
+                            {formatInsertValues({value: data.calcStopLossROI, symbol: "%", symbolEnd: true, fixed: 2})}
                         </div>
                         <div>
                             {formatInsertValues({value: data.calcStopLossBalance, symbol: "$"})}

@@ -1,7 +1,7 @@
 
 const calcPercentageOf =(percentageValue, ofValue)=> (percentageValue / 100) * ofValue;
 
-const calcPercentage =(num1, num2)=> Math.abs(Math.round(((num1 / num2) - 1) * 10000 ) / 10000) * 100
+const calcPercentage =(num1, num2, abs=true)=>Math.abs(Math.round(((num1 / num2) - 1) * 10000 ) / 10000 ) * 100;
 
 const calcPNL = (target, units, entry)=>(target * units) - (entry * units);
 
@@ -16,19 +16,6 @@ const performObjCalcs = (obj)=>{
 
     //calculate total units
     obj.totalUnits = obj.leveragedCapital / obj.entryPrice
-
-    //calculate liq
-    // obj.liqPrice = obj.entryPrice / obj.leverage;
-
-    // if(obj.mode === "long"){
-    //     obj.liqPrice =  obj.entryPrice - obj.liqPrice;
-    // }else{
-    //     obj.liqPrice = obj.liqPrice + obj.entryPrice;
-    // }
-    
-    // obj.liqPriceChange = Math.abs(obj.liqPrice - obj.entryPrice);
-    // obj.liqPriceChangePercent = calcPercentage(obj.liqPrice, obj.entryPrice);
-
 
     obj.calcTakeProfit = obj.entryPrice
     
@@ -92,10 +79,10 @@ const performObjCalcs = (obj)=>{
     obj.calcTakeProfitBalance = obj.capital + obj.profit;
     obj.calcStopLossBalance = obj.capital - Math.abs(obj.loss);
 
-    obj.calcTakeProfitROE = calcPercentage(obj.calcTakeProfitBalance, obj.capital);
-    obj.calcStopLossROE = calcPercentage(obj.calcStopLossBalance, obj.capital);
+    obj.calcTakeProfitROI = calcPercentage(obj.calcTakeProfitBalance, obj.capital);
+    obj.calcStopLossROI = calcPercentage(obj.calcStopLossBalance, obj.capital);
 
-    obj.calcLossTable = calcLossTable(obj.capital, obj.entryPrice, obj.leverage, obj.mode);
+    obj.calcLossTable = calcLossTable(obj.capital, obj.entryPrice, obj.totalUnits, obj.mode);
 
     return obj;
 };
@@ -104,6 +91,7 @@ const calcLossTable =(capital, entry, units, mode)=>{
     const arr = [];
     let capitalChange = 0
     let unitPrice = 0
+
     for(let i=.1; i <=1; i+=.1){
         capitalChange = capital * i
 
